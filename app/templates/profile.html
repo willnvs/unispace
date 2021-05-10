@@ -1,0 +1,332 @@
+<!-- templates/profile.html -->
+{% extends "base.html" %}
+
+<meta http-equiv="refresh" >
+
+{% block content %}
+
+ <!--left box -->  
+
+<div class="column is-4 is-offset-4" style="display: inline-block;float:left;margin-left: 0;border: 0px solid #e3f1e9;border-radius: 20px;background:#f0f7fc;width: auto;">   <!--this can configure the box size-->  
+ 
+ 
+   <!--LOGIC TO PROFILE PIC  -->  
+
+
+  <div class="profile-userpic text-center" id="profile_image_main" style="border-radius: 50% !important;">
+   
+      <div class="container" style="width: 120px;height: 126px;display: block;margin: 0 auto;">
+
+      {% if photo == none %}
+
+      <a id="modal-btn3" >
+
+      <div class="inner" style="background-color: #f2f2f3;width: 40px;height: 40px; padding: 6px 10px;border-radius: 100%;position: absolute;bottom: 0;right: 0;">
+
+        <i class="icon-camera" style="vertical-align: middle;font-size: 20px;color: #525252;text-align: center;"></i>
+
+      </div>  
+
+    {% endif %}
+
+
+     <!--CHECK IF THE USER HAS A PROFILE PICTURE  -->  
+
+    {% if photo == none %}
+
+
+    <!--show avatar  -->  
+
+    <img src="/static/upload/profile/avatar.png" style="border-radius: 100px; width: 120px; height: 120px;">
+    
+    </a>
+    {% endif %}
+  
+    
+    {% if photo != none %}
+
+    <a id="modal-btn3" >
+       <img src="/static/upload/profile/{{ photo.lower() }}" style="border-radius: 100px; width: 120px; height: 120px;">
+    </a>
+     {% endif %}
+    
+    </div>
+   
+  </div>
+                        
+   <!--END PROFILE PIC -->  
+
+  <!--Greetings -->  
+
+    <h3 class="title" style="font-family: 'Varela Round', sans-serif; color: #324047;font-size: 24px;margin-top: 10px;">Hi {{ name }}!</h3>
+    <h3 class="" style="font-family: 'Varela Round', sans-serif;color: #fff;font-size: 14px;font-weight: 600;width: 25%;margin-left: 37%;text-align: center;background: #52bd5b;border-radius: 12px;margin-top: -5px;">Admin</h3>
+    <div class="box" style="background: #d8ffdf00;box-shadow:none;">
+ 
+    <h3 class="title" style="line-height: 0;color: black;font-size: 16px;font-weight: 300;margin-top: 10px;margin-bottom: 0px;font-family: 'Varela Round', sans-serif;">👋 &nbsp; Welcome to the group class!</h3>
+         
+    </div>
+        
+  <!--End Greetings -->  
+  
+
+         <!--Members Menu -->  
+
+        <div id="members"  class="box">
+    
+
+          <h3 class="title" style="color: #232323;font-size: 16px;padding-bottom: 10px;text-align: left;border-bottom: 1px solid #e8e8e8;font-weight: 700;margin-bottom: -15px;font-family: 'Varela Round', sans-serif;">Members</h3>
+          <h3 class="title" style="color: #989898;font-size: 16px;float: right;margin-top: -14px;font-family: 'Varela Round', sans-serif;">{{ output|length }}</h3>
+          <br>
+         
+          {% if output|length > 0  %}  
+
+          <h3 class="title" style="font-size: 18px;font-weight: 600;text-align: left;color: #525252;font-family: 'Varela Round', sans-serif;">
+            {% for user in output %}
+            <a href="" style="font-family: 'Varela Round', sans-serif;">
+            <p style="font-size: 18px;font-weight: 700;text-align: left;color: #338a7e;margin-block-end: 0.5em;"></p>
+            {% if user[0] != none %}
+            <img src="/static/upload/profile/{{ user[0] }}" style="border-radius: 100px;width: 39px; height:39px; border: 3px solid #e16aff;vertical-align: middle;">  {{ user[1] }}</p></a>
+            {% endif %}
+            {% if user[0] == none %}
+            <img src="/static/upload/profile/avatar.png" style="border-radius: 100px;width: 39px;height:39px; border: 3px solid #e16aff;vertical-align: middle;">  {{ user[1] }}</p></a>
+
+          {% endif %}
+
+            {% endfor %}
+          </h3>
+
+          
+          {% endif %}
+
+             <!--Message if Members are empty -->  
+
+             {% if output|length == 0 %}
+            
+             <h3 class="title" style="color: #afafaf;font-size: 15px;padding-bottom: 40px;text-align: left;font-weight: 700;margin-bottom: -15px;font-family: 'Varela Round', sans-serif;">No members yet</h3>
+             
+             {% endif %}
+        </div>
+
+</div>
+
+
+<div class="content column is-8 is-offset-4">
+
+
+   <table cellpadding="0" cellspacing="0">
+
+  
+
+      {% if tasks|length >= 0 %}
+
+
+          <!-- condition to show the Course inside the header -->
+
+          {% for list in tasks[:1] %}
+         <!-- <h3 style="float: left;padding-left: 12px;font-family: 'Varela Round', sans-serif; margin-top: 15px;"># {{ list.course_name }}</h3>-->
+          <br>
+
+
+          <h3 style="font-size: 20px;float: left;padding-left: 0px;font-family: 'Varela Round', sans-serif; margin-top: 1px;    margin-bottom: 15px;"></h3>
+          <h3 type="text" value="" autocomplete="off"  name="lists" id="lists"   style=" outline: none;font-size: 20px;float: left;border: none;padding-left: 5px;font-family: 'Varela Round', sans-serif;margin-top: 0px;    margin-bottom: 15px;background: #faebd700;color: #363636;font-weight: 600;line-height: 1.125;">{{ list.course_name }}</h3>
+
+
+          {% endfor %}
+
+
+       
+
+           <!-- show messages -->
+
+    {% for task in tasks %}
+      <tbody style="border-left: #e8e8e8 solid 1px;border-right: #e8e8e8 solid 1px;border-top: #e8e8e8 solid 1px;" >
+          <tr style="border-bottom: #e8e8e8 solid 1px;background:white; " >
+            {% for list in tasks[:1] %}
+              <td  id="ct-task" style="width:32%;font-size: 16px;color: #393a3a;font-weight: 500;font-family: 'Varela Round', sans-serif; border:none;vertical-align: middle;" >
+                  {% for user in output[:1] %}
+                  <a href="" style="font-family: 'Varela Round', sans-serif;">
+                       {% if task.photo[0]|length > 0 %}
+                      <img src="/static/upload/profile/{{ task.photo }}" style="border-radius: 100px;width: 39px; height:39px; border: 3px solid #e16aff;vertical-align: middle;">  <b>{{ task.name }}</b> said:</a>
+                       {% else %}
+                      <img src="/static/upload/profile/avatar.png" style="border-radius: 100px;width: 39px;height:39px; border: 3px solid #e16aff;vertical-align: middle;">  <b>{{ task.name }}</b> said:</a>
+                      {% endif %}
+                  {% endfor %}
+                    <td style="border:none; text-align: center;padding: 1.2em 0em; vertical-align:middle;float: left;margin-left: 0px;font-size: 16px;color: #393a3a;font-weight: 500;font-family: 'Varela Round', sans-serif;"  >
+               {{task.content}} 
+                <input type="hidden" name="task_list" id="task_list" value="{{ course_name }}"></td>
+            {% endfor %}
+              </td  >
+          <td style="font-size:18px;font-weight: 700;border:none; color: #338a7e;  text-align: center;padding: .9em 0em;width: 10%; vertical-align:middle;">
+                  <a href="/remove/{{task.id}}"><i class="icon-trash"
+                    style="    color: #ec3e7e8c; margin-right: 8px;border: 1px solid #ec3e7e8c;margin-left: 8px;width: 50px;padding: 11px 12px;border-radius: 100px;font-size: 21px;" ></i></a>
+              </td>
+          </tr>   
+      </tbody>
+    {% endfor %}
+
+    
+
+
+      {% endif %}
+
+    </table>
+ 
+    <table> 
+      <tbody style=" position: sticky;border-left: #933ab53d solid 2px;border-right: #933ab53d solid 2px;border-bottom-left-radius: 38px;border-top-left-radius: 38px;border-top: #933ab53d solid 2px;border-bottom: #933ab53d solid 2px;background: white;">
+
+
+    </tr>
+
+     <!-- form to send messages -->
+         
+  <tr>
+      <th>
+      <h3 type="text" style="margin-top: 5px;margin-left: 0px;padding-left:10px;width: 100%;padding-left:0px;outline: none;font-size: 16px;color: #393a3a;font-weight: 500;font-family: 'Varela Round', sans-serif; border:none;vertical-align: middle;">Write a message:</h3>
+      <form id="taskform" action="/insert" method="POST">
+        <div class="field" style="margin-top: 10px;">
+          <div class="control">
+          <input id="addtask"   class="input is-large" style="border-radius: 0px;font-family:'Varela Round', sans-serif;" type="text" placeholder="Send a Message" autofocus autocomplete="off"  name="content" id="content">
+          </div>
+        </div>
+          <input type="hidden" name="name_course" id="name_course" value="{{ course_name }}">
+      </form>
+    </th> 
+  </tr>
+
+
+
+
+</tbody>
+
+  </table>
+
+
+</div>
+
+</div>
+  
+
+
+ <!--Open Popup - upload profile pic -->  
+
+
+ <div class="modal3 modal">
+    <div class="modal3-content column is-4 is-offset-4">
+      <span class="close-btn3" style="font-size: 46px;padding-right: 15px;">&times;</span>
+  
+  
+   <!--Fields inside popup -->  
+  
+  
+      <div class="column is-12 is-offset-0">
+          <h3 class="title" style="text-align:center;line-height: 0;color: black;font-family: 'Varela Round', sans-serif; border:none; font-size: 16px;font-weight: 300;margin-top: 25px;margin-bottom: 0px;">📷&nbsp; Chose your profile picture</h3>
+          <div class="box" style="box-shadow:none;border:none;margin-bottom: -10px;">
+           
+      <form action="/upload"  method = "POST" style="text-align: center;"  enctype = "multipart/form-data"> 
+    
+            <input name="fileF" type="file" style="margin-top: 30px;" />
+  
+            <input type="submit" id="modalsub" class="button is-block is-info is-large is-fullwidth" style="font-family: 'Varela Round', sans-serif; margin-top:30px; border:none; color:#fff; background:#773690;   border-radius: 35px;" value="Upload Photo">
+  
+
+    </form>
+     
+          </div>
+      </div>
+  
+    </div>
+  </div>
+   
+
+   <!--Invisible Popup div  -->  
+  
+  <div class="modal3">
+      <div class="modal-header3">
+        <span class="close-btn3">&times;</span>
+       </div>
+      <div class="modal-content3">
+       </div>
+      <div class="modal-footer3">
+       </div>
+    </div>
+
+
+<style>
+
+    .modal3 {
+      display: none;
+      position: fixed; 
+      left: 0; 
+      top: 0;
+      width: 100%;
+      height: 100%; 
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal3-content {
+      position: relative; 
+      background-color: white;
+      color: black;
+      border-radius: 24px;
+      padding: 0px; 
+      margin-top: 210px; 
+      width: 100%;  
+      -webkit-animation-name: animatetop;
+      -webkit-animation-duration: 0.4s;
+      animation-name: animatetop;
+      animation-duration: 0.4s
+    }
+    
+    .modal3-card, .modal3-content{
+      margin: 0 0px;
+      overflow: auto; 
+      margin-top: 210px; 
+    }
+    
+    .close-btn3 {
+      float: right; 
+      color: lightgray; 
+      font-size: 24px;  
+      font-weight: bold;
+    }
+    .close-btn3:hover {
+      color: darkgray;
+    }
+    
+    
+
+</style>
+  
+
+<script>
+
+    let modalBtn3 = document.getElementById("modal-btn3")
+    let modal3 = document.querySelector(".modal3")
+    let closeBtn3 = document.querySelector(".close-btn3")
+    modalBtn3.onclick = function(){
+      modal3.style.display = "block"
+    }
+    closeBtn3.onclick = function(){
+      modal3.style.display = "none"
+    }
+    window.onclick = function(e){
+      if(e.target == modal3){
+        modal3.style.display = "none"
+      }
+    }
+     
+    
+    </script>
+
+
+
+  
+   <!--end popup - upload profile pic  --> 
+
+
+<script src="{{ url_for('static', filename='upload.js') }}"></script>
+ 
+
+   
+ 
+{% endblock %}
